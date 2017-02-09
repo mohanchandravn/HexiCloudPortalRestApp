@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <weblogic-web-app xmlns="http://xmlns.oracle.com/weblogic/weblogic-web-app">
-    <context-root>hexiCloudRestApp</context-root>
+    <context-root>hexiCloudRest</context-root>
     <container-descriptor>
       <prefer-web-inf-classes>true</prefer-web-inf-classes>
   </container-descriptor>

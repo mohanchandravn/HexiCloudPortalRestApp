@@ -22,12 +22,17 @@
 		value="repconn123" /> <property name="connectionCachingEnabled" value="true" 
 		/> </bean> -->
 
-	<!-- Datasource for weblogic : Start -->
+	<!-- Datasource for Tomcat : Start -->
+<!-- 
+ <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean"> 
+	<property name="jndiName" value="java:comp/env/jdbc/HexiCloudDS" />
+	</bean> -->
 
-	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
-		<property name="jndiName" value="java:comp/env/jdbc/SampleRestAppWSDS" />
+	<!-- Datasource for Weblogic : Start -->
+<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="jdbc/HexiCloudDS" />
 	</bean>
-	
+
 	<bean id="steps" class="com.hexiCloud.portalDB.factory.Steps"
 		scope="singleton">
 	</bean>
@@ -36,11 +41,11 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="steps" ref="steps" />
 	</bean>
-	
+
 	<bean id="stepsDao" class="com.hexiCloud.portalDB.daoImpl.StepsDAOImpl">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-	
+
 	<bean id="userEmailsDAO" class="com.hexiCloud.portalDB.daoImpl.UserEmailsDAOImpl">
 		<property name="dataSource" ref="dataSource" />
 	</bean>

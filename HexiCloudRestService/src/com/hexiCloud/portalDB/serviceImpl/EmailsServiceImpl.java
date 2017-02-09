@@ -24,9 +24,9 @@ public class EmailsServiceImpl implements EmailsService {
 	}
 
 	@Override
-	public void saveUserEmail(UserEmail userEmail) {
+	public UserEmail saveUserEmail(UserEmail userEmail) {
 		logger.info("*******  saveUserEmail() of  service *****************");
-		userEmailsDAO.saveUserEmail(userEmail);
+		return userEmailsDAO.saveUserEmail(userEmail);
 
 	}
 

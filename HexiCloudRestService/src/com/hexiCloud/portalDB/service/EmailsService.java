@@ -8,6 +8,6 @@ public interface EmailsService {
 
 	public List<UserEmail> getUserEmails(String userId);
 
-	public void saveUserEmail(UserEmail userEmail);
+	public UserEmail saveUserEmail(UserEmail userEmail);
 
 }
