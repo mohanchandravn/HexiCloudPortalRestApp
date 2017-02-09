@@ -18,7 +18,10 @@ public class UserStep implements Serializable {
 	private String preStepCode;
 	private Timestamp createdDate;
 	private Timestamp updatedDate;
-
+	private boolean decisionMakingStep;
+	private boolean nonRedirectStep;
+	private boolean roleSelectionStep;
+	
 	public UserStep() {
 
 	}
@@ -98,6 +101,48 @@ public class UserStep implements Serializable {
 
 	public void setUpdatedDate(Timestamp updatedDate) {
 		this.updatedDate = updatedDate;
+	}
+
+	/**
+	 * @return the decisionMakingStep
+	 */
+	public boolean isDecisionMakingStep() {
+		return decisionMakingStep;
+	}
+
+	/**
+	 * @param decisionMakingStep the decisionMakingStep to set
+	 */
+	public void setDecisionMakingStep(boolean decisionMakingStep) {
+		this.decisionMakingStep = decisionMakingStep;
+	}
+
+	/**
+	 * @return the nonRedirectStep
+	 */
+	public boolean isNonRedirectStep() {
+		return nonRedirectStep;
+	}
+
+	/**
+	 * @param nonRedirectStep the nonRedirectStep to set
+	 */
+	public void setNonRedirectStep(boolean nonRedirectStep) {
+		this.nonRedirectStep = nonRedirectStep;
+	}
+
+	/**
+	 * @return the roleSelectionStep
+	 */
+	public boolean isRoleSelectionStep() {
+		return roleSelectionStep;
+	}
+
+	/**
+	 * @param roleSelectionStep the roleSelectionStep to set
+	 */
+	public void setRoleSelectionStep(boolean roleSelectionStep) {
+		this.roleSelectionStep = roleSelectionStep;
 	}
 
 }

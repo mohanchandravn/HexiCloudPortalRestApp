@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.hexiCloud.portalDB.bean.Step;
 import com.hexiCloud.portalDB.bean.StepDocument;
 import com.hexiCloud.portalDB.bean.UserStep;
 import com.hexiCloud.portalDB.dao.UserStepsDAO;
@@ -31,7 +32,7 @@ public class UserStepsDAOImpl implements UserStepsDAO {
 	public void setSteps(Steps steps) {
 		this.steps = steps;
 	}
-	
+
 	@Override
 	public List<StepDocument> findDocsByStepId(int stepId) {
 		logger.info(" Begining of findDocsByStepId() ");
@@ -49,14 +50,9 @@ public class UserStepsDAOImpl implements UserStepsDAO {
 	@Override
 	public void createUserSteps(UserStep userStep) {
 		logger.info(" Begining of createUserSteps() ");
-		logger.info("UserStep id : " + userStep.getUserId() + " Role : " + userStep.getUserRole() + "cur step Id :" + userStep.getCurStepId()
-				+ "cur step code :" + userStep.getCurStepCode() 
-				+ "pre step Id :" + userStep.getPreStepId() 
-				+ "pre step Code :" + userStep.getPreStepCode()
-				+ "cur step Id :" + userStep.getCurStepId() );
-//		Steps steps = new Steps();
-//		
-		logger.info("Retrieved id's, current Step : " + steps.getStepId(userStep.getCurStepCode()) + " Previous : " +  steps.getStepId(userStep.getPreStepCode()));
+
+		logger.info("Retrieved id's, current Step : " + steps.getStepId(userStep.getCurStepCode()) + ", Previous : "
+				+ steps.getStepId(userStep.getPreStepCode()));
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		List<UserStep> existingUserSteps = jdbcTemplate.query(SqlQueryConstantsUtil.SQL_FIND_USER_CURRENT_STEP,
 				new Object[] { userStep.getUserId() }, new BeanPropertyRowMapper(UserStep.class));
@@ -78,17 +74,6 @@ public class UserStepsDAOImpl implements UserStepsDAO {
 							steps.getStepId(userStep.getCurStepCode()), userStep.getCurStepCode(),
 							steps.getStepId(userStep.getPreStepCode()), userStep.getPreStepCode() });
 		}
-//		if (null != existingUserSteps && existingUserSteps.size() > 0) {
-//			jdbcTemplate.update(SqlQueryConstantsUtil.SQL_UPDATE_USER_STEP,
-//					new Object[] { userStep.getUserRole(), userStep.getCurStepId(),
-//							userStep.getCurStepCode(), userStep.getPreStepId(),
-//							userStep.getPreStepCode(), userStep.getUserId() });
-//		} else {
-//			jdbcTemplate.update(SqlQueryConstantsUtil.SQL_CREATE_USER_STEP,
-//					new Object[] { userStep.getUserId(), userStep.getUserRole(),
-//							userStep.getCurStepId(), userStep.getCurStepCode(),
-//							userStep.getPreStepId(), userStep.getPreStepCode() });
-//		}
 		logger.info(" End of createUserSteps() ");
 
 	}
@@ -96,13 +81,19 @@ public class UserStepsDAOImpl implements UserStepsDAO {
 	@Override
 	public UserStep getUsersCurrentStep(String userId) {
 		logger.info(" Begining of getUsersCurrentStep() ");
+		UserStep userStep;
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		List<UserStep> existingUserSteps = jdbcTemplate.query(SqlQueryConstantsUtil.SQL_FIND_USER_CURRENT_STEP,
 				new Object[] { userId }, new BeanPropertyRowMapper(UserStep.class));
+		if (null != existingUserSteps && existingUserSteps.size() >0 ) {
+			userStep = existingUserSteps.get(0);
+			Step dbStep = steps.getSteps().get(userStep.getCurStepCode());
+			userStep.setDecisionMakingStep(dbStep.isDecisionMaking());
+			userStep.setRoleSelectionStep(dbStep.isRoleSelelction());
+			userStep.setNonRedirectStep(dbStep.isNonRedirectStep());
+		}
 		logger.info(" Ending of getUsersCurrentStep() ");
 		return existingUserSteps != null ? (UserStep) existingUserSteps.get(0) : null;
 	}
-
-	
 
 }
