@@ -14,33 +14,36 @@
 
 	<context:component-scan base-package="com.hexiCloud.portalDB" />
 
-  <!--    If you are using tomcat then un comment the below code and comment the weblogic start & end code -->
-	 <!--  <bean id="dataSource" class="oracle.jdbc.pool.OracleDataSource"
-		destroy-method="close">
-		<property name="URL"
-			value="jdbc:oracle:thin:@rstnssiovm0020.us.oracle.com:1522/repconn.us.oracle.com" />
-		<property name="user" value="repconnect" />
-		<property name="password" value="repconn123" />
-		<property name="connectionCachingEnabled" value="true" />
-	</bean> --> 
-	
-	<!--  Datasource for weblogic		 : Start -->
-	
-	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
-   		<property name="jndiName" value="java:comp/env/jdbc/SampleRestAppWSDS"/>
-    </bean>
-     <bean id="steps" class="com.hexiCloud.portalDB.factory.Steps" scope="singleton"> 
+	<!-- If you are using tomcat then un comment the below code and comment 
+		the weblogic start & end code -->
+	<!-- <bean id="dataSource" class="oracle.jdbc.pool.OracleDataSource" destroy-method="close"> 
+		<property name="URL" value="jdbc:oracle:thin:@rstnssiovm0020.us.oracle.com:1522/repconn.us.oracle.com" 
+		/> <property name="user" value="repconnect" /> <property name="password" 
+		value="repconn123" /> <property name="connectionCachingEnabled" value="true" 
+		/> </bean> -->
 
-	 </bean>
+	<!-- Datasource for weblogic : Start -->
+
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/SampleRestAppWSDS" />
+	</bean>
 	
+	<bean id="steps" class="com.hexiCloud.portalDB.factory.Steps"
+		scope="singleton">
+	</bean>
+
 	<bean id="userStepsDao" class="com.hexiCloud.portalDB.daoImpl.UserStepsDAOImpl">
 		<property name="dataSource" ref="dataSource" />
 		<property name="steps" ref="steps" />
 	</bean>
+	
 	<bean id="stepsDao" class="com.hexiCloud.portalDB.daoImpl.StepsDAOImpl">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	
-	
-	
+	<bean id="userEmailsDAO" class="com.hexiCloud.portalDB.daoImpl.UserEmailsDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+
 </beans>
