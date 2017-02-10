@@ -93,7 +93,7 @@ public class UserStepsDAOImpl implements UserStepsDAO {
 			userStep.setNonRedirectStep(dbStep.isNonRedirectStep());
 		}
 		logger.info(" Ending of getUsersCurrentStep() ");
-		return existingUserSteps != null ? (UserStep) existingUserSteps.get(0) : null;
+		return !existingUserSteps.isEmpty() ? (UserStep) existingUserSteps.get(0) : null;
 	}
 
 }
